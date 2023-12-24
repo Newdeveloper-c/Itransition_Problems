@@ -1,7 +1,8 @@
 ﻿using RockPaperScissors.Exceptions;
 using RockPaperScissors.Managers;
 
-var game = new GameManager(args);
+//var game = new GameManager(args);
+var game = new GameManager(new string[] { "Rock", "Paper", "Scissors", "Spok", "Lizard" });
 
 try
 {
@@ -9,15 +10,15 @@ try
     game.Process();
     game.End();
 }
-catch(WrongInputMovesException ex)
+catch (WrongInputMovesException ex)
 {
     Console.WriteLine(ex.Message);
 }
-catch(GameExitException ex)
+catch (GameExitException ex)
 {
     Console.WriteLine(ex.Message);
 }
-catch(Exception ex)
+catch (Exception ex)
 {
     Console.WriteLine(ex.Message);
 }

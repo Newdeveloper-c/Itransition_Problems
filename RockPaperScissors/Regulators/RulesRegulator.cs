@@ -5,7 +5,7 @@ namespace RockPaperScissors.Regulators;
 public class RulesRegulator
 {
     private readonly string[] _moves;
-    public Dictionary<string, string> AviableMoves { get; init; } = new();    
+    public Dictionary<string, string> AviableMoves { get; init; } = new();
 
     public RulesRegulator(string[] moves)
     {
@@ -29,17 +29,18 @@ public class RulesRegulator
         if (userMove == StaticMembers.help)
             return (int)EUserMoveStatus.Help;
 
-        if(userMove == StaticMembers.exit)
+        if (userMove == StaticMembers.exit)
             return (int)EUserMoveStatus.Exit;
 
         return (int)EUserMoveStatus.Success;
     }
 
-    public string FindWinner(string computerMove, string userMove) 
+    public string FindWinner(string computerMove, string userMove)
+    => StaticMembers.MoveResult(int.Parse(computerMove), int.Parse(userMove), _moves.Length) switch
     {
-        int result = StaticMembers.MoveResult(int.Parse(userMove) - 1, int.Parse(computerMove) - 1, _moves.Length);
-        return result == (int)EGameResult.Draw ? "Draw!" 
-            : result == (int)EGameResult.Win ? "You win!"
-            : "Computer win!";
-    }
+        (int)EGameResult.Draw => "Draw!",
+        (int)EGameResult.Win => "You win!",
+        (int)EGameResult.Lose => "Computer win!",
+        _ => "No Result"
+    };
 }

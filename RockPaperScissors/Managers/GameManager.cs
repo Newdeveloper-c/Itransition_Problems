@@ -9,10 +9,10 @@ public class GameManager
 {
     private readonly string[] _moves;
     private readonly RulesRegulator _rulesRegulator;
-    private string key;
-    private string hmac;
-    private string computerMove;
-    private string userMove;
+    private string key = null!;
+    private string hmac = null!;
+    private string computerMove = null!;
+    private string userMove = null!;
 
     public GameManager(string[] moves)
     {
@@ -77,14 +77,14 @@ public class GameManager
             "Rock\n" +
             "Rock Paper Scissors\n" +
             "Rock Paper Scissors Lizard Spock\n" +
-            "and so on. Please try again !!!");
+            "and so on. Please try again !!!\n");
     }
 
     private void GetUserMove()
     {
         Console.Write("Enter your move: ");
 
-        userMove = Console.ReadLine();
+        userMove = Console.ReadLine() ?? "";
     }
 
     private void PrintMenu()

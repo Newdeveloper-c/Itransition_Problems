@@ -10,7 +10,7 @@ public static class KeyGenarator
         int keyLengthInBytes = keyLengthInBits / 8;
 
         var keyBytes = new byte[keyLengthInBytes];
-
+        
         using (var rngCsp = new RNGCryptoServiceProvider())
         {
             rngCsp.GetBytes(keyBytes);
