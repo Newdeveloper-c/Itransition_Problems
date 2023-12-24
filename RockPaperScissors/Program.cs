@@ -1,17 +1,30 @@
-﻿
-using RockPaperScissors.Generators;
+﻿using RockPaperScissors.Exceptions;
+using RockPaperScissors.Managers;
 
-var res = args;
+//var game = new GameManager(new string[] {"a", "B", "c"});
+var game = new GameManager(args);
 
-//for(int i =  0; i < res.Length; i++)
-//{
-//    for(int j = 0; j < 3; j++)
-//        Console.Write(res[i] + "   ");
-//    Console.Write("\n");
-//    Console.WriteLine();
-//}
+try
+{
+    game.Start();
+    game.Process();
+    game.End();
+}
+catch(WrongInputMovesException ex)
+{
+    Console.WriteLine(ex.Message);
+}
+catch(GameExitException ex)
+{
+    Console.WriteLine(ex.Message);
+}
+catch(Exception ex)
+{
+    Console.WriteLine(ex.Message);
+}
 
-var table = new TableGenerator(res);
-table.GenerateHelpTable();
+
+
+
 
 

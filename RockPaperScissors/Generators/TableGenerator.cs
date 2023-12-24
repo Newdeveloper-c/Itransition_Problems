@@ -1,36 +1,34 @@
-﻿namespace RockPaperScissors.Generators;
+﻿using RockPaperScissors.Helpers;
 
-public class TableGenerator
+namespace RockPaperScissors.Generators;
+
+public static class TableGenerator
 {
-    private readonly string[] _moves;
-    private string[,] table;
-
-    public TableGenerator(string[] moves)
+    public static void GenerateHelpTable(string[] moves)
     {
-        _moves = moves;
+        Console.WriteLine("\nThis is help desk.\n" +
+            "Right side is your moves and down computer's.\n" +
+            "Above of Draws diagonal could be your results.\n");
+
+        CalculateTable(moves, out string[,] table);
+
+        DrawTable(moves, table);
+
+        Console.WriteLine();
     }
 
-    public void GenerateHelpTable()
+    private static void DrawTable(string[] moves, string[,] table)
     {
-        CalculateTable();
+        CalculateColLengths(moves, table, out int[] colLengths);
 
-        DrawTable();
-    }
-
-    private void DrawTable()
-    {
-        int tblLength = _moves.Length;
-
-        CalculateColLengths(out int[] colLengths);
-
-        for (int i = 0; i <= tblLength; i++)
+        for (int i = 0; i <= moves.Length; i++)
         {
             //Upper border of rows
-            for (int k = 0; k <= tblLength; k++)
+            for (int k = 0; k <= moves.Length; k++)
                 Console.Write("+" + (new string('-', colLengths[k])));
             Console.WriteLine("+");
 
-            for (int j = 0; j <= tblLength; j++)
+            for (int j = 0; j <= moves.Length; j++)
             {
                 Console.Write('|');
                 //centering the string
@@ -42,12 +40,12 @@ public class TableGenerator
         }
 
         //Last downside border
-        for (int k = 0; k <= tblLength; k++)
+        for (int k = 0; k <= moves.Length; k++)
             Console.Write("+" + (new string('-', colLengths[k])));
         Console.WriteLine("+");
     }
 
-    private void CalculateColLengths(out int[] colLengths)
+    private static void CalculateColLengths(string[] moves, string[,] table, out int[] colLengths)
     {
         //Calculating lengths of each column
         colLengths = Enumerable.Range(0, table.GetLength(1))
@@ -55,30 +53,29 @@ public class TableGenerator
                                   .ToArray();
 
         //Fixing too long move name for first moves column
-        colLengths[0] = Math.Max(colLengths[0], _moves.Max(x => x.Length));
+        colLengths[0] = Math.Max(colLengths[0], moves.Max(x => x.Length));
     }
 
-
-    private void CalculateTable()
+    private static void CalculateTable(string[] moves, out string[,] table)
     {
-        int numbOf_moves = _moves.Length;
-        int halfNumb = numbOf_moves / 2;
-        table = new string[numbOf_moves + 1, numbOf_moves + 1];
+        table = new string[moves.Length + 1, moves.Length + 1];
 
         table[0, 0] = "v PC\\User >";
-        for (int i = 1; i <= numbOf_moves; i++)
+        for (int i = 1; i <= moves.Length; i++)
         {
-            table[0, i] = _moves[i - 1];
-            table[i, 0] = _moves[i - 1];
+            table[0, i] = moves[i - 1];
+            table[i, 0] = moves[i - 1];
         }
 
-        for(int i = 1;i <= numbOf_moves; i++)
-            for (int j = 1; j <= numbOf_moves; j++)
-                table[i, j] = Math.Sign((j - i + halfNumb + numbOf_moves) % numbOf_moves - halfNumb) switch
+        for (int i = 1; i <= moves.Length; i++)
+            for (int j = 1; j <= moves.Length; j++)
+                table[i, j] = StaticMembers.MoveResult(i - 1, j - 1, moves.Length) switch
                 {
-                    -1 => "Lose",
-                    0 => "Draw",
-                    1 => "Win"
+                    (int)EGameResult.Lose => "Lose",
+                    (int)EGameResult.Draw => "Draw",
+                    (int)EGameResult.Win => "Win",
+                    _ => "Empty"
                 };
     }
+
 }
