@@ -1,8 +1,7 @@
 ﻿using RockPaperScissors.Exceptions;
 using RockPaperScissors.Managers;
 
-//var game = new GameManager(args);
-var game = new GameManager(new string[] { "Rock", "Paper", "Scissors", "Spok", "Lizard" });
+var game = new GameManager(args);
 
 try
 {
