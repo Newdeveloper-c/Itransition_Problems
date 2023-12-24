@@ -5,7 +5,6 @@ namespace RockPaperScissors.Regulators;
 public class RulesRegulator
 {
     private readonly string[] _moves;
-
     public Dictionary<string, string> AviableMoves { get; init; } = new();    
 
     public RulesRegulator(string[] moves)
@@ -18,7 +17,9 @@ public class RulesRegulator
         AviableMoves.Add("?", "help");
     }
 
-    public bool CheckMoves() => _moves.Length % 2 != 0;
+    private bool CheckForDublicates() => _moves.GroupBy(x => x).Any(group => group.Count() > 1);
+
+    public bool CheckMoves() => _moves.Length > 1 && _moves.Length % 2 != 0 && !CheckForDublicates();
 
     public int CheckUserMove(string userMove)
     {

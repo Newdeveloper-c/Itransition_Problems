@@ -71,7 +71,8 @@ public class GameManager
 
     private void PrintCorrectMovesExample()
     {
-        Console.WriteLine("The number of entered moves must be odd !!!\n" +
+        Console.WriteLine("!!! Wrong Input !!! \n" +
+            "The number of entered moves must be odd and greater than 1 with no dublications \n" +
             "For example:\n" +
             "Rock\n" +
             "Rock Paper Scissors\n" +
